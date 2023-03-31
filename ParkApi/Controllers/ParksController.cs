@@ -17,7 +17,7 @@ namespace ParkApi.Controllers
 
     // GET api/parks
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Park>>> Get(string name, string state, string description)
+    public async Task<ActionResult<IEnumerable<Park>>> Get(string name, string state, string description, int? pageNumber, int? pageSize)
     {
       IQueryable<Park> query = _db.Parks.AsQueryable();
 
@@ -36,8 +36,27 @@ namespace ParkApi.Controllers
         query = query.Where(entry => entry.Description == description);
       }
 
-      return await query.ToListAsync();
+      // Pagination logic
+      // Note: This is a loosely followed version of the pagination found Patrick Gods video 
+      int currentPageNumber = pageNumber ?? 1;
+      int currentPageSize = pageSize ?? 4;
+
+      int totalItems = await query.CountAsync();
+      int totalPages = (int)Math.Ceiling((double)totalItems / currentPageSize);
+
+      List<Park> parks = await query
+          .Skip((currentPageNumber - 1) * currentPageSize)
+          .Take(currentPageSize)
+          .ToListAsync();
+
+      return Ok(new
+      {
+        TotalItems = totalItems,
+        TotalPages = totalPages,
+        Items = parks
+      });
     }
+
 
     // GET api/parks/5
     [HttpGet("{id}")]
