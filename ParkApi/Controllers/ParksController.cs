@@ -37,7 +37,7 @@ namespace ParkApi.Controllers
       }
 
       // Pagination logic
-      // Note: This is a loosely followed version of the pagination found Patrick Gods video 
+      // Note: This is a loosely followed version of the pagination found in Patrick God's video: https://www.youtube.com/watch?v=hJfzwNxwNI0&ab_channel=PatrickGod
       int currentPageNumber = pageNumber ?? 1;
       int currentPageSize = pageSize ?? 4;
 
@@ -131,6 +131,16 @@ namespace ParkApi.Controllers
       await _db.SaveChangesAsync();
 
       return NoContent();
+    }
+
+    [HttpGet("search")]
+    public async Task<ActionResult<IEnumerable<Park>>> Search(string query)
+    {
+      List<Park> parks = await _db.Parks
+          .Where(park => park.Name.Contains(query) || park.State.Contains(query))
+          .ToListAsync();
+
+      return parks;
     }
   }
 }
