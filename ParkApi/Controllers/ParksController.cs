@@ -13,7 +13,7 @@ namespace ParkApi.Controllers
     public ParksController(ParkApiContext db)
     {
       _db = db;
-    }
+    } 
 
     // GET api/parks
     [HttpGet]
