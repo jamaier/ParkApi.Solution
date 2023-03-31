@@ -131,7 +131,7 @@ https://localhost:5001/api/Parks/1
 
 ## Known Bugs
 
-* _No known issues_
+* _Currently unsure if CORS has functionality_
 
 * _Reach out with any questions or concerns to [jacobamaier@gmail.com](jacobamaier@gmail.com)_
 

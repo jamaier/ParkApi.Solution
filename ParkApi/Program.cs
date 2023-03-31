@@ -22,10 +22,10 @@ builder.Services.AddCors();
 
 var app = builder.Build();
 
-
+// currently not sure if it's actually working
 app.UseCors(builder =>
 {
-    builder.WithOrigins("http://localhost:5001")
+    builder.WithOrigins("*")
            .AllowAnyHeader()
            .AllowAnyMethod();
 });
