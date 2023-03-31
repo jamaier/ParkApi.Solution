@@ -140,7 +140,7 @@ namespace ParkApi.Controllers
           .Where(park => park.Name.Contains(query) || park.State.Contains(query))
           .ToListAsync();
 
-      return parks;
+      return parks;  
     }
   }
 }
